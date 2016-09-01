@@ -186,7 +186,7 @@ function DoublyLinkedList(){
 }
 
 // 在任意位置插入一个新元素
-this.insert = function(position,element){
+this.insert = function(ssposition,element){
     // 检查越界值
     if(position >= 0 && position <= length){
         var node = new Node(element);
@@ -227,6 +227,48 @@ this.insert = function(position,element){
         return true;
     }else{
         return false;
+    }
+};
+
+// 从任意位置移除元素
+this.removeAt = function(position){
+
+    // 检查越界值
+    if(position > -1 && position < length){
+        var current = head;
+        var previous;
+        var index = 0;
+
+        // 移除第一项
+        if(position === 0){
+            head = current.next;
+
+            // 如果只有一项,更新tail
+            if(length === 1){
+                tail = null;
+            }else{
+                head.prev = null;
+            }
+        }else if(position === length-1){
+            // 最后一项
+            current = tail;
+            tail = current.prev;
+            tail.next = null;
+        }else{
+            while(index++ < position){
+                previous = current;
+                current = current.next;
+            }
+
+            // 将previous与current的下一项链接起来——跳过current
+            previous.next = current.next;
+            current.next.prev = previous;
+        }
+        length--;
+
+        return current.element;
+    }else{
+        return null;
     }
 };
 
