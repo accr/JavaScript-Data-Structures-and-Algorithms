@@ -89,3 +89,144 @@ this.removeAt = function(position){
     }
 };
 
+// 在任意位置插入一个元素
+this.insert = function(position,element){
+
+    // 检查越界值
+    if(position >= 0 && position <= length){
+
+        var node = new Node(element);
+        var current = head;
+        var previous;
+        var index = 0;
+
+        if(position === 0){
+            // 在第一个位置添加
+            node.next = current;
+            head = node;
+        }else{
+            while(index++<position){
+                previous = current;
+                current = current.next;
+            }
+            node.next = current;
+            previous.next = node;
+        }
+        length++;   // 更新列表长度
+
+        return true;
+    }else{
+        return false;
+    }
+};
+
+// toString方法
+this.toString = function(){
+    var current = head;
+    var string = '';
+
+    while(current){
+        string = current.element;
+        current = current.next;
+    }
+    return string;
+};
+
+// indexOf方法
+this.indexOf = function(element){
+
+    var current = head;
+    var index = -1;
+
+    while(current){
+        if(element === current.element){
+            return index;
+        }
+        index++;
+        current = current.next;
+    }
+    return -1;
+};
+
+// remove方法
+this.remove = function(element){
+    var index = this.indexOf(element);
+    return this.removeAt(index);
+}
+
+// isEmpty方法
+this.isEmpty = function(){
+    return length === 0;
+};
+
+// size方法
+this.size = function(){
+    return length;
+};
+
+// getHead方法
+this.getHead = function(){
+    return head;
+};
+
+// 双向链表
+function DoublyLinkedList(){
+
+    var node = function(element){
+        this.element = element;
+        this.next = null;
+        this.prev = null;   // 新增的
+    }；
+
+    var length = 0;
+    var head = null;
+    var tail = null;    // 新增的
+
+    // 这里是方法
+}
+
+// 在任意位置插入一个新元素
+this.insert = function(position,element){
+    // 检查越界值
+    if(position >= 0 && position <= length){
+        var node = new Node(element);
+        var current = head;
+        var previous;
+        var index = 0;
+
+        if(position === 0){
+            // 在第一个位置添加
+            if(!head){
+                // 新增的
+                head = node;
+                tail = node;
+            }else{
+                node.next = current;
+                current.prev = node;    // 新增的
+                head = node;
+            }
+        }else if(position === length){
+            // 最后一项
+            // 新增的
+            current = tail;
+            current.next = node;
+            node.prev = current;
+            tail = node;
+        }else{
+            while(index++<position){
+                previous = current;
+                current = current.next;
+            }
+            node.next = current;
+            previous.next = node;
+
+            current.prev = node;
+            node.prev = previous;
+        }
+        length++;   // 更新列表长度、
+        return true;
+    }else{
+        return false;
+    }
+};
+
