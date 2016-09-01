@@ -186,7 +186,7 @@ function DoublyLinkedList(){
 }
 
 // 在任意位置插入一个新元素
-this.insert = function(ssposition,element){
+this.insert = function(position,element){
     // 检查越界值
     if(position >= 0 && position <= length){
         var node = new Node(element);
