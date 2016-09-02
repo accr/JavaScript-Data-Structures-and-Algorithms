@@ -153,4 +153,114 @@ var ValuePair = function(key,value){
     }
 };
 
+// put方法
+this.put = function(key,value){
+    var position = loseloseHashCode(key);
+
+    if(table[position] == undefined){
+        table[position] = new LinkedList();
+    }
+    table[position].append(new ValuePair(key,value));
+};
+
+// get方法
+this.get = function(key){
+    var position = loseloseHashCode(key);
+
+    if(table[position] !== undefined){
+
+        // 遍历链表寻找键值
+        var current = table[position].getHead();
+
+        while(current.next){
+            if(current.element.key === key){
+                return current.element.value;
+            }
+            current = current.next;
+        }
+        // 检查元素在链表第一个或最后一个节点的情况
+        if(current.element.key === key){
+            return current.element.value;
+        }
+    }
+    return undefined;
+};
+
+// remove方法
+this.remove = function(key){
+    var position = loseloseHashCode(key);
+
+    if(table[position] !== undefined){
+        var current = table[position].getHead();
+        while(current.next){
+            if(current.element.key === key){
+                table[position].remove(current.element);
+                if(table[position].isEmpty()){
+                    table[position] = undefined;
+                }
+                return true;
+            }
+            current = current.next;
+        }
+
+        // 检查是否为第一个或最后一个元素
+        if(current.element.key === key){
+            table[position].remove(current.element);
+            if(table[position].isEmpty()){
+                table[position] = undefined;
+            }
+            return true;
+        }
+    }
+    return false;
+};
+
+// 线性探查
+// put方法
+this.put = function(key,values){
+    var position = loseloseHashCode(key);
+
+    if(table[position] == undefined){
+        table[position] = new ValuePair(key,value);
+    }else{
+        var index = ++position;
+        while(table[index] != undefined){
+            index++;
+        }
+        table[index] = new ValuePair(key,value);
+    }
+};
+
+// get方法
+this.get = function(key){
+    var position = loseloseHashCode(key);
+
+    if(table[position] !== undefined){
+        if(table[position].key === key){
+            return table[position].value;
+        }else{
+            var index = ++position;
+            while(table[index] === undefined || table[index].key !== key){
+                index++;
+            }
+            if(table[index].key === key){
+                return table[index].value;
+            }
+        }
+    }
+    return undefined;
+};
+
+// remove方法
+table[index] = undefined;
+
+// 创建更好的散列函数
+var djb2HashCode = function(key){
+    var hash = 5381;
+    for(var i=0;i<key.length;i++){
+        hash = hash * 33 + key.charCodeAt(i);
+    }
+    return hash % 1013;
+};
+
 
