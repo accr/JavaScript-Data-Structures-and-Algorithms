@@ -153,4 +153,30 @@ var intersectionAB = setA.intersection(setB);
 console.log(intersectionAB.values());
 
 // 差集
+this.difference = function(otherSet){
+    var differenceSet = new Set();
+
+    var values = this.values();
+    for(var i=0;i<values.length;i++){
+        if(!otherSet.has(values[i])){
+            differenceSet.add(values[i]);
+        }
+    }
+    return differenceSet;
+};
+
+var setA = new Set();
+setA.add(1);
+setA.add(2);
+setA.add(3);
+
+var setB = new Set();
+setB.add(2);
+setB.add(3);
+setB.add(4);
+
+var differenceAB = setA.difference(setB);
+console.log(differenceAB.values());
+
+// 子集
 
