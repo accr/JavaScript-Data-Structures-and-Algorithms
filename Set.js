@@ -179,4 +179,35 @@ var differenceAB = setA.difference(setB);
 console.log(differenceAB.values());
 
 // 子集
+this.subset = function(otherSet){
+    if(this.size() > otherSet.size()){
+        return false;
+    }else{
+        var values = this.values;
+        for(var i=0;i<values.length;i++){
+            if(!otherSet.has(values[i])){
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+var setA = new Set();
+setA.add(1);
+setA.add(2);
+
+var setB = new Set();
+setB.add(1);
+setB.add(2);
+setB.add(3);
+
+var setC = new Set();
+setC.add(2);
+setC.add(3);
+setC.add(4);
+
+console.log(setA.subset(setB));
+console.log(setA.subset(setC));
+
 
