@@ -144,7 +144,3 @@ function baseConverter(decNumber,base){
     return baseString;
 }
 
-function myFunction(){
-    var myFunction = new Function();
-    
-}
